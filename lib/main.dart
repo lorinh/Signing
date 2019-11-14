@@ -33,14 +33,16 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<File> createFileOfPdfUrl() async {
-    final url = "http://africau.edu/images/default/sample.pdf";
-    final filename = url.substring(url.lastIndexOf("/") + 1);
-    var request = await HttpClient().getUrl(Uri.parse(url));
-    var response = await request.close();
-    var bytes = await consolidateHttpClientResponseBytes(response);
-    String dir = (await getApplicationDocumentsDirectory()).path;
-    File file = new File('$dir/$filename');
-    await file.writeAsBytes(bytes);
+    // final url = "http://africau.edu/images/default/sample.pdf";
+    // final filename = url.substring(url.lastIndexOf("/") + 1);
+    // var request = await HttpClient().getUrl(Uri.parse(url));
+    // var response = await request.close();
+    // var bytes = await consolidateHttpClientResponseBytes(response);
+    // String dir = (await getApplicationDocumentsDirectory()).path;
+    // File file = new File('$dir/$filename');
+
+    //await file.writeAsBytes(bytes);
+    File file = File("assets/Waiver.pdf");
     return file;
   }
 
