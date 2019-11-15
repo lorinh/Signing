@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
 import 'package:path_provider/path_provider.dart';
 
+import 'package:flutter/services.dart' show rootBundle;
+import 'dart:typed_data';
+
 void main() {
   runApp(MaterialApp(
     title: 'Plugin example app',
@@ -33,6 +36,12 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<File> createFileOfPdfUrl() async {
+    Directory tempDir = await getTemporaryDirectory();
+    String tempPath = tempDir.path;
+    File tempFile = File('$tempPath/copy.pdf');
+    ByteData bd = await rootBundle.load('assets/Waiver.pdf');
+    await tempFile.writeAsBytes(bd.buffer.asUint8List(), flush: true);
+    return tempFile;
     // final url = "http://africau.edu/images/default/sample.pdf";
     // final filename = url.substring(url.lastIndexOf("/") + 1);
     // var request = await HttpClient().getUrl(Uri.parse(url));
@@ -42,13 +51,14 @@ class _MyAppState extends State<MyApp> {
     // File file = new File('$dir/$filename');
 
     //await file.writeAsBytes(bytes);
-    File file = File("assets/Waiver.pdf");
+    File file = new File("/assets/Waiver.pdf");
     return file;
   }
 
   @override
   Widget build(BuildContext context) {
-    return PDFViewerScaffold(
+    print(pathPDF);
+    return pathPDF != "" ? PDFViewerScaffold(
         appBar: AppBar(
           title: Text("Document"),
           actions: <Widget>[
@@ -58,7 +68,7 @@ class _MyAppState extends State<MyApp> {
             ),
           ],
         ),
-        path: pathPDF);
+        path: pathPDF) : Text("Loading...");
   }
 }
 
