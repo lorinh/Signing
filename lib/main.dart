@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
+import 'dart:ui';
+import 'package:signature/signature.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -14,13 +16,90 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  var _signatureCanvas = Signature(
+    //width: 300,
+    height: 100,
+    //backgroundColor: Colors.lightBlueAccent,
+    backgroundColor: Colors.transparent,
+  );
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: PhotoView(
-        imageProvider: AssetImage("assets/Waiver.png"),
+      child: Stack(
+        children: [
+          PhotoView(
+            imageProvider: AssetImage("assets/Waiver.png"),
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Container(
+                height: 100,
+                //color: Colors.purple,
+                child: ClipRect(
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+                    child: Container(
+                      decoration: new BoxDecoration(
+                          color: Colors.grey.withOpacity(0.3)),
+                      child: Stack(
+                        children: [
+                          Center(
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Padding(
+                                    padding: EdgeInsets.fromLTRB(50, 25, 20, 0),
+                                    child: Container(
+                                      color: Colors.white,
+                                      height: 3,
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                                  child: FlatButton(
+                                    child: Icon(
+                                      Icons.check_circle_outline,
+                                      color: Colors.white,
+                                      size: 50.0,
+                                    ),
+                                    onPressed: (){print("Pressed");},
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(0, 0, 90, 0),
+                            child: _signatureCanvas,
+                          ),
+                        ],
+                      ),
+                      //color: Colors.yellow,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          //     Container(
+          //       //alignment: Alignment.bottomCenter,
+          //       color: Colors.red,
+          //       height: 50,
+          //       //decoration: BoxDecoration(b),
+          //       child: BackdropFilter(
+          //       filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+          //       child: new Container(
+          //           decoration: new BoxDecoration(color: Colors.white.withOpacity(0.0)),
+          // // ),
+          //     ),
+        ],
       ),
     );
+    // );
   }
 
   // @override
