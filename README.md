@@ -1,7 +1,9 @@
 # Signing
 
-This is an Flutter app used to for signing documents and forwarding them to an email address
+Simple Flutter application for signing documents.
 
 ## Getting Started
 
-This is currently very work in progress with little support for the end-product.
+Download and install Flutter according to <a href="https://flutter.dev/docs/get-started/install">https://flutter.dev/docs/get-started/install/>
+
+Run this project using `flutter run`
